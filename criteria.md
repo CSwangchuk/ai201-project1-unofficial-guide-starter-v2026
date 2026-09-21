@@ -23,8 +23,7 @@ For at least 4 of my 5 test questions, the retrieved chunks include one that
 contains the answer.
 
 **Why this target:**
-<!-- e.g. "One of my questions is about a topic only two documents mention, so
-     I expect that one to be hard." -->
+Although most of my questions have clear answers in individaul campus-life posts, sometimes the retrieval may miss one or confuse it with another because some documents discuss similar topics.
 
 ---
 
@@ -35,7 +34,7 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
-
+     The system is designed to answer only from retrieved documents so an answer without a source would not be properly grounded and easier for a person to verify
 ---
 
 ## 3. The relevance gate stops out-of-corpus questions
@@ -52,6 +51,7 @@ in at least 4 of 5 tries.
 **Why this target:**
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
+     I chose 4 out of 5 because I want the system to reject most questions that are unrelated to the campus-life documents, while allowing for one possible mistake when deciding whether a retrieved chunk is relevant.
 
 ---
 
@@ -68,11 +68,12 @@ in at least 4 of 5 tries.
           sentence cut in half at either end."
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
+     At least 4 of 5 sampled chunks should contain a complete thought and be understandable without needing the text before or after it.
 
 
 
 **Why this target:**
-
+The campus-life documents are short posts, so most chunks should be able to stand on their own. I chose 4 out of 5 because one chunk may still be unclear depending on where the text is split.
 
 
 ---
@@ -86,10 +87,11 @@ in at least 4 of 5 tries.
      handles badly, about source attribution being correct rather than merely
      present — anything, as long as it names a number or an observable
      outcome. -->
-
+For at least 4 of my 5 test questions, the source named in the answer should contain the information used to answer the question.
 
 
 **Why this target:**
+I chose 4 out of 5 because I want the system to usually cite the correct document, but one answer may still retrieve a related source that does not contain the exact information.
 
 
 

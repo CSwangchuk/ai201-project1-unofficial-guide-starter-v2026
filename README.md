@@ -1,6 +1,6 @@
 # The Unofficial Guide
 
-<!-- Replace this line with your name and which corpus you picked. -->
+Chengay Samdrup Wangchuk - Corpus: campus_life
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -21,11 +21,9 @@
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
+What This Does
 
-     Milestone 5. -->
+This project uses the campus_life corpus, which contains short posts about student life. The system breaks the documents into chunks, stores their embeddings, and retrieves relevant chunks when a user asks a question. It can answer questions about topics such as dining, courses, housing, deadlines, and campus policies. The system also uses a relevance cutoff so it can refuse questions that are not covered by the documents.
 
 
 ## Chunking Strategy
@@ -37,7 +35,6 @@
 I kept each campus-life post as a single chunk because the documents are short and usually focus on one topic. When I examined the sample posts, each one already contained enough context to be understood on its own. Splitting them further could separate useful information from its context, so keeping the whole post together was a better fit for this corpus.
 
 
-## Sample Chunks
 ## Sample Chunks
 
 **Chunk 1** — source: `admin_add_drop_deadline.txt#0` — produced by: `chunker.py::split_documents`
@@ -97,45 +94,44 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
 ## Sample Answer
 
-<!-- One complete question and answer, pasted as text, with the source line
-     visible. Milestone 4. -->
-
 **Question:**
+
+What happens on a student's transcript if they drop a course after week two?
 
 **Answer:**
 
-```
-```
+If a student drops a course after week two, it shows as a W on their transcript.
+
+Source: `admin_add_drop_deadline.txt`
+
+Sources retrieved: `admin_add_drop_deadline.txt`, `admin_grade_appeals.txt`, `admin_pass_fail_option.txt`, `admin_transcript_requests.txt`, `admin_withdrawal_deadline.txt`
+
 
 **My relevance cutoff:**
 
-<!-- The number you set in config.py, and how you got there.
+My relevance cutoff: 0.6
 
-     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
-     that it clearly doesn't, and wrote down the best distance for each. What
-     did those two groups look like? Where was the gap? Put the actual numbers
-     here — the table below wants all ten rows.
-
-     Milestone 4. -->
+I kept the relevance cutoff at 0.6 because there was a clear gap between the in-corpus and out-of-scope questions. The highest best distance for an in-corpus question was 0.3284, while the lowest best distance for an out-of-scope question was 0.8246. Since 0.6 falls between these two groups, it allows relevant questions through while rejecting unrelated questions.
 
 | Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+|---|---|---:|
+| What happens on a student's transcript if they drop a course after week two? | Yes | 0.2688 |
+| How do work-study earnings affect financial aid compared with non-work-study campus jobs? | Yes | 0.1356 |
+| What is one benefit of declaring a major earlier? | Yes | 0.3284 |
+| What happens to unused dining dollars at the end of the spring semester? | Yes | 0.2407 |
+| When should students go to North Kitchen if they want to avoid waiting between classes? | Yes | 0.2389 |
+| What is the capital of Mongolia? | No | 0.8246 |
+| How do I change the oil in a diesel engine? | No | 0.9340 |
+| Who won the 1994 World Cup? | No | 0.8859 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.8442 |
+| How do I write a for loop in Rust? | No | 0.8960 |
 
 ## How I Used AI
 
-<!-- Two specific moments. For each: what you asked for, what came back, and
-     what you changed about it.
+1. I asked AI to help me understand the code in chunker.py, especially what the Chunk object and its text, source, index, and produced_by fields meant. After understanding the code, I changed split_documents() so that each short campus-life post becomes one complete chunk instead of using the starter's generic chunker.
 
-     "I asked Claude to write the chunking function from my notes. It ignored
-     the overlap, so I added that myself" is the level of detail we're after.
-     "I used AI to help me code" is not.
+2. I used AI to help me interpret the retrieval distance results from my five in-corpus questions and five out-of-scope questions. It helped me compare the two groups and identify the gap between them. Based on the actual distances I collected, I kept the relevance cutoff at 0.6 because the highest in-corpus distance was 0.3284 and the lowest out-of-scope distance was 0.8246.
 
-     Milestone 5. -->
-
-**1.**
-
-**2.**
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never

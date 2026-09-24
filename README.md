@@ -132,6 +132,8 @@ I kept the relevance cutoff at 0.6 because there was a clear gap between the in-
 
 2. I used AI to help me interpret the retrieval distance results from my five in-corpus questions and five out-of-scope questions. It helped me compare the two groups and identify the gap between them. Based on the actual distances I collected, I kept the relevance cutoff at 0.6 because the highest in-corpus distance was 0.3284 and the lowest out-of-scope distance was 0.8246.
 
+3. In Unit 2, I used AI to help me interpret the evaluation results and determine why some answers were marked as failures even though retrieval found the correct documents. I also used Claude Code to locate the grounding instruction and make one small prompt change that preserved important wording from retrieved sources. I reviewed the code change with `git diff` before running the after evaluation.
+
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
@@ -225,47 +227,34 @@ The criterion I would tighten is Criterion 1. Instead of requiring the retrieved
 ## The Improvement
 
 **What I changed:**
+I added one instruction to the grounding prompt telling the model to preserve the documents' wording for important facts, including names, numbers, deadlines, and key phrases, instead of unnecessarily paraphrasing them.
 
 **Why I picked it:**
-
-<!-- Connect it to a specific diagnosis above in one sentence. If you can't,
-     you picked a fix because it sounded impressive. -->
+The retrieval stage consistently found the correct documents, but the generated answers sometimes paraphrased the expected wording. For example, the system produced “do not count against your financial aid” instead of “don't count against your financial aid.” The answer was factually correct, but the wording difference caused the simple evaluation scorer to mark it as a failure. This pointed to the generation stage rather than retrieval.
 
 ### Run Log — After
 
-<!-- Same format, same five criteria, three runs each.
-     `python run_eval.py --label after` -->
-
-| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
-|---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| Criterion                                                   | Target | Run 1 | Run 2 | Run 3 | Verdict |
+| ----------------------------------------------------------- | ------ | ----- | ----- | ----- | ------- |
+| 1. Retrieved chunks contain the answer                      | 4 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 2. Every answer names a source                              | 5 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 3. Gate stops out-of-corpus questions                       | 4 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 4. Revised chunk-boundary criterion                         | 4 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 5. Named source contains the information used in the answer | 4 of 5 | 5/5   | 5/5   | 5/5   | MET     |
 
 **Did it help?**
 
-<!-- Say plainly whether it did, and how you know. If it made things worse,
-     say that — a change that backfired, honestly reported, earns full credit
-     and is more interesting than one that worked. What matters is that you can
-     tell.
-
-     Milestone 4. -->
+Yes. Using the same scorer before and after the change, the question-level evaluation improved from 11 out of 15 passing answers before the change to 15 out of 15 afterward. The work-study question improved from 0/3 passes to 3/3, and the dining-dollars question improved from 2/3 to 3/3. Retrieval distances stayed the same, so the improvement came from more consistent answer generation rather than a change in retrieval.
 
 ## What's Still Broken
 
-<!-- For each criterion still missed after your fix: what you'd do about it,
-     and why you stopped where you did.
+After the grounding-prompt improvement, none of my five acceptance criteria remain missed. The evaluation produced 15 out of 15 passing question-level results, and the relevance gate continued to refuse all 5 out-of-corpus questions.
 
-     "I ran out of time" is fine if it's true. Pretending nothing is left is
-     not.
-
-     Milestone 5. -->
+One remaining limitation is that my evaluation scorer uses exact substring matching. This means two answers can have the same meaning but receive different scores if they use different wording. I did not change the scorer during the before-and-after experiment because I wanted the grounding-prompt change to be the only system change being measured.
 
 ## What I'd Do Differently
 
-<!-- Knowing what you know now — which of your five criteria would you write
-     differently, and why?
+I would write Criterion 4 differently from the beginning. My original criterion said that chunks should contain a “complete thought” and be “understandable,” but those terms were subjective and difficult to measure consistently. I would instead define an observable condition, such as checking whether sampled chunks begin and end at appropriate document or sentence boundaries.
 
-     Milestone 5. -->
+I would also think more carefully about how my expected-answer phrases interact with the scorer. Exact substring matching can mark a factually correct paraphrase as a failure.
+

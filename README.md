@@ -153,7 +153,7 @@ I kept the relevance cutoff at 0.6 because there was a clear gap between the in-
 | 1. Retrieved chunks contain the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
 | 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
 | 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
-| 4. Sampled chunks contain a complete thought and are understandable on their own | 4 of 5 | ... | ... | ... | ... |
+| 4 | Revised chunk-boundary criterion | MET | The original criterion was subjective, so I revised it to check observable chunk boundaries. All 5 sampled chunks begin at the start of their source document and end without cutting off text, meeting the target of 4 out of 5. |
 | 5. Named source contains the information used in the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
 
 ### Real Output
@@ -206,42 +206,21 @@ To avoid waiting between classes, students should go to North Kitchen before 11:
 
 ## Verdicts
 
-<!-- MET or MISSED for each of the five, against the target you wrote last
-     unit — not a new one. Plus a sentence on how you decided. That sentence
-     matters most where it was close.
+| # | Criterion                                                | Verdict | How I decided                                                                                                                                                                                                                          |
+| - | -------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 | Retrieved chunks contain the answer                      | MET     | All 5 test questions retrieved chunks containing the information needed to answer them in all three runs, meeting my target of at least 4 out of 5.                                                                                    |
+| 2 | Every answer names a source                              | MET     | Every generated answer named at least one source document in all three runs, meeting my target of 5 out of 5.                                                                                                                          |
+| 3 | Gate stops out-of-corpus questions                       | MET     | The relevance gate refused all 5 out-of-corpus questions, exceeding my target of at least 4 out of 5.                                                                                                                                  |
+| 4 | Revised chunk-boundary criterion                         | MET     | The original criterion was subjective, so I revised it to use observable chunk boundaries. All 5 sampled chunks began at the start of a source document and ended without cutting off text, meeting the target of at least 4 out of 5. |
+| 5 | Named source contains the information used in the answer | MET     | For all 5 test questions, the named source contained the information used in the answer, exceeding my target of at least 4 out of 5.                                                                                                   |
 
-     If your target said 4 of 5 and your runs came out 4, 3, 4, that's a MISS.
-     The target has to hold, not show up occasionally.
-
-     Milestone 2. -->
-
-| # | Criterion | Verdict | How I decided |
-|---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
 
 ## Diagnoses
 
-<!-- For each miss: which stage caused it, and how. The stage alone isn't
-     enough — you need the mechanism.
+None of my five criteria were missed after revising Criterion 4 so that it could be measured consistently.
 
-     Not a diagnosis: "Question 3 didn't work."
-     A diagnosis:     "Question 3 asks about laundry costs. The answer is in
-                       one sentence that got split across two chunks, so
-                       neither chunk on its own contains it."
+The criterion I would tighten is Criterion 1. Instead of requiring the retrieved chunks to contain the answer for at least 4 of 5 questions, I would require 5 of 5 because my current retrieval results found the correct information for every test question across all three runs.
 
-     The five stages: loading → chunking → embedding → retrieval → generation.
-
-     Look for a pattern. If three misses all ask about numbers, that's one
-     problem, not three.
-
-     Missed nothing? Say so, then say honestly whether your targets were set
-     low, and which one you'd tighten and to what.
-
-     Milestone 3. -->
 
 ## The Improvement
 

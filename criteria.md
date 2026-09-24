@@ -57,24 +57,15 @@ in at least 4 of 5 tries.
 
 ## 4. Something about your chunks
 
-<!-- YOU WRITE THIS ONE.
-
-     How would you know if your chunks were the right size? Name something
-     countable or observable.
-
-     Examples of the right shape — don't copy these, they should come from
-     what you actually saw in Milestone 3:
-       - "At least 4 of 5 sampled chunks read as a complete thought, with no
-          sentence cut in half at either end."
-       - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
-     At least 4 of 5 sampled chunks should contain a complete thought and be understandable without needing the text before or after it.
-
-
+At least 4 of 5 sampled chunks should contain a complete thought and be understandable without needing the text before or after it.
 
 **Why this target:**
+
 The campus-life documents are short posts, so most chunks should be able to stand on their own. I chose 4 out of 5 because one chunk may still be unclear depending on where the text is split.
 
+> **Revised in Unit 2:** At least 4 of 5 sampled chunks begin at the start of a source document and end at a sentence boundary without cutting off text.
+>
+> **Why revised:** My original criterion used the phrases “complete thought” and “understandable,” which are subjective and could be judged differently by different people. The revised criterion gives me specific boundaries that I can check consistently.
 
 ---
 

@@ -148,27 +148,61 @@ I kept the relevance cutoff at 0.6 because there was a clear gap between the in-
 
 ## Run Log — Before
 
-<!-- Your five criteria, three runs each. `python run_eval.py --label before`
-     runs the questions, puts the OUT_OF_SCOPE ones through the gate, and
-     writes it all into results/ for you. Targets come from criteria.md; the
-     verdict column is your call.
-
-     Criterion 3 is measured in one deterministic pass rather than three, so
-     the same number goes in all three run columns. That's correct, not lazy.
-
-     Milestone 1. -->
-
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunks contain the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Sampled chunks contain a complete thought and are understandable on their own | 4 of 5 | ... | ... | ... | ... |
+| 5. Named source contains the information used in the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
 
-<!-- Underneath, paste the REAL output for each criterion from one of your
-     runs — the actual text your system produced, not a description of it.
-     Name the file and function that produced it. -->
+### Real Output
+
+**Criterion 1 — Retrieved chunks contain the answer**
+
+Question: What happens on a student's transcript if they drop a course after week two?
+
+Sources retrieved: `admin_add_drop_deadline.txt`, `admin_grade_appeals.txt`, `admin_pass_fail_option.txt`, `admin_transcript_requests.txt`, `admin_withdrawal_deadline.txt`
+
+Answer:
+
+```text
+If a student drops a course after week two, it shows as a W on their transcript (admin_add_drop_deadline.txt).
+```
+
+**Criterion 2 — Every answer names a source**
+
+Question: How do work-study earnings affect financial aid compared with non-work-study campus jobs?
+
+Answer:
+
+```text
+Work-study earnings do not count against your financial aid the way ordinary income does, whereas non-work-study campus jobs do count against your financial aid.
+
+Source: admin_campus_jobs_and_financial_aid.txt
+```
+
+**Criterion 3 — Gate stops out-of-corpus questions**
+
+```text
+refused  (best distance 0.825)  What is the capital of Mongolia?
+refused  (best distance 0.934)  How do I change the oil in a diesel engine?
+refused  (best distance 0.886)  Who won the 1994 World Cup?
+refused  (best distance 0.844)  What is the recommended dosage of ibuprofen for a headache?
+refused  (best distance 0.896)  How do I write a for loop in Rust?
+
+gate refused 5 of 5
+```
+
+**Criterion 5 — Named source contains the information used in the answer**
+
+Question: When should students go to North Kitchen if they want to avoid waiting between classes?
+
+Answer:
+
+```text
+To avoid waiting between classes, students should go to North Kitchen before 11:45. (Source: dining_north_kitchen_followup.txt)
+```
 
 ## Verdicts
 
